@@ -1,0 +1,7 @@
+query mypage($userId: Int!) {
+  user(id: $userId) {
+    id
+    name
+    email
+  }
+}
