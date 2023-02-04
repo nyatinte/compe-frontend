@@ -13,10 +13,19 @@ const config: CodegenConfig = {
         // 'typed-document-node', // https://the-guild.dev/graphql/codegen/plugins/typed-document-node
       ],
     },
-    './graphql.schema.json': {
-      plugins: ['introspection'],
+    //  introspectionを作成する
+    // './graphql.schema.json': {
+    //   plugins: ['introspection'],
+    // },
+    // Zodスキーマを生成する
+    'src/generated/validate.ts': {
+      plugins: ['typescript', 'typescript-validation-schema'],
+      config: {
+        strictScalars: true,
+        schema: 'zod',
+      },
     },
-    // スキーマを生成するとき
+    // GraphQLスキーマを生成する
     'src/generated/schema.graphql': {
       plugins: ['schema-ast'],
     },

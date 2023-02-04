@@ -1,0 +1,14 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "github.copilot",
+    "graphql.vscode-graphql",
+    "graphql.vscode-graphql-syntax",
+    "oderwat.indent-rainbow",
+    "ms-vscode.vscode-typescript-next",
+    "ms-vsliveshare.vsliveshare",
+    "pulkitgangwar.nextjs-snippets",
+    "esbenp.prettier-vscode",
+    "shardulm94.trailing-spaces"
+  ]
+}
