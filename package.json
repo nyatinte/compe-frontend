@@ -3,7 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "run-p dev:*",
+    "dev:next": "next dev",
+    "dev:codegen": "npm run codegen -- --watch",
+    "dev:pathpida": "pathpida --ignorePath .gitignore --watch",
     "build": "next build",
     "start": "next start",
     "lint": "next lint --dir src",
@@ -42,6 +45,8 @@
     "@tsconfig/strictest": "^1.0.2",
     "@typescript-eslint/eslint-plugin": "^5.50.0",
     "eslint-config-prettier": "^8.6.0",
+    "npm-run-all": "^4.1.5",
+    "pathpida": "^0.20.1",
     "prettier": "^2.8.3"
   }
 }

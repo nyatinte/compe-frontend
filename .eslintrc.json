@@ -1,5 +1,5 @@
 {
-  "ignorePatterns": ["node_modules/", "dist/", "generated/"],
+  "ignorePatterns": ["node_modules/", "dist/", "generated/", "src/lib/$path.ts"],
   "extends": [
     "next/core-web-vitals",
     "plugin:import/recomended",
