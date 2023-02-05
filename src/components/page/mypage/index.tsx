@@ -1,10 +1,14 @@
+import LoginButton from '@/components/common/Button/LoginButton'
 import { useMypageQuery } from '@/generated/graphql'
 import { NextPage } from 'next'
+import { useSession } from 'next-auth/react'
 
 export const Mypage: NextPage = () => {
+  const { data: session } = useSession()
   const { data, loading } = useMypageQuery({
+    skip: !session?.user?.id,
     variables: {
-      userId: 1,
+      userId: session?.user?.id as string,
     },
   })
   if (loading) {
@@ -12,6 +16,7 @@ export const Mypage: NextPage = () => {
   }
   return (
     <>
+      <LoginButton />
       <div>{data?.user?.name}</div>
       <div>{data?.user?.email}</div>
     </>

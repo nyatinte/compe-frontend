@@ -30,6 +30,12 @@ const config: CodegenConfig = {
       plugins: ['schema-ast'],
     },
   },
+  // graphql-scalarsを使う場合はここで指定する
+  config: {
+    scalars: {
+      DateTime: 'string',
+    },
+  },
 }
 
 export default config

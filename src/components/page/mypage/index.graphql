@@ -1,4 +1,4 @@
-query mypage($userId: Int!) {
+query mypage($userId: ID!) {
   user(id: $userId) {
     id
     name
