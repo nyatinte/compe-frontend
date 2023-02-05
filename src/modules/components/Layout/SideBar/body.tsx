@@ -16,6 +16,10 @@ const SideBarBody = () => {
       label: 'マイページ',
       href: pagesPath.mypage.$url(),
     },
+    {
+      label: '設定',
+      href: pagesPath.mypage.config.$url(),
+    },
   ]
   return (
     <VStack as={'nav'} divider={<StackDivider borderColor='gray.200' />} spacing='4'>

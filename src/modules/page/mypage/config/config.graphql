@@ -1,0 +1,17 @@
+query config($userId: ID!) {
+  user(id: $userId) {
+    id
+    name
+    email
+    image
+  }
+}
+
+mutation updateConfig($userId: ID!, $input: UpdateUserInput!) {
+  updateUser(id: $userId, updateUserInput: $input) {
+    id
+    name
+    email
+    image
+  }
+}
