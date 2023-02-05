@@ -20,11 +20,9 @@ const Layout: FC<LayoutProps> = ({ children }) => {
   console.log(data, loading, error)
 
   if (loading) return <Loading />
-  if (error) return <p>{error.message}</p>
-  if (!data?.user) return <p>no data</p>
   return (
     <>
-      <Header user={filter<HeaderFragment>(HeaderFragmentDoc, data.user)} />
+      <Header user={data?.user as HeaderFragment} />
       <Container maxW='container.xl' as='main'>
         {children}
       </Container>

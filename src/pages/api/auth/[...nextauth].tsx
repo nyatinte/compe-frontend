@@ -43,6 +43,7 @@ export default NextAuth({
             input: {
               name: user.name || user.email,
               email: user.email,
+              image: user.image,
             },
           },
         })

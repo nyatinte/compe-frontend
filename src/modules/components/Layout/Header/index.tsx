@@ -4,10 +4,9 @@ import { FC } from 'react'
 import SideBar from '../SideBar'
 
 type HeaderProps = {
-  user: HeaderFragment
+  user: HeaderFragment | null
 }
 const Header: FC<HeaderProps> = ({ user }) => {
-  const { name, image } = user
   return (
     <header>
       <Flex bg='gray.200' alignItems={'center'} justifyContent='space-between' p={'3'}>
@@ -15,7 +14,7 @@ const Header: FC<HeaderProps> = ({ user }) => {
           ぷちこん
         </Text>
         <HStack spacing='4'>
-          <Avatar name={name} src={image || 'https://bit.ly/broken-link'} />
+          <Avatar src={user?.image || 'https://bit.ly/broken-link'} />
           <SideBar />
         </HStack>
       </Flex>

@@ -20,6 +20,10 @@ const SideBarBody = () => {
       label: '設定',
       href: pagesPath.mypage.config.$url(),
     },
+    {
+      label: 'コンペを作る',
+      href: pagesPath.competition.create.$url(),
+    },
   ]
   return (
     <VStack as={'nav'} divider={<StackDivider borderColor='gray.200' />} spacing='4'>

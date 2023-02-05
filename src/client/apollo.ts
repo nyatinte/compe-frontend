@@ -12,7 +12,7 @@ const authLink = setContext(async (_, { headers }) => {
   return {
     headers: {
       ...headers,
-      authorization: session?.accessToken ? `Bearer ${session.user.accessToken}` : '',
+      authorization: session?.user.id ? session?.user.id : '',
     },
   }
 })
