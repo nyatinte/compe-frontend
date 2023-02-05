@@ -1,6 +1,22 @@
-import { ApolloClient, InMemoryCache } from '@apollo/client'
+import { ApolloClient, createHttpLink, InMemoryCache } from '@apollo/client'
+import { setContext } from '@apollo/client/link/context'
+import { getSession } from 'next-auth/react'
 
-export const client = new ApolloClient({
+const httpLink = createHttpLink({
   uri: process.env.NODE_ENV === 'production' ? '/api/graphql' : 'http://localhost:4000/graphql',
+})
+
+const authLink = setContext(async (_, { headers }) => {
+  const session = await getSession()
+
+  return {
+    headers: {
+      ...headers,
+      authorization: session?.accessToken ? `Bearer ${session.user.accessToken}` : '',
+    },
+  }
+})
+export const client = new ApolloClient({
+  link: authLink.concat(httpLink),
   cache: new InMemoryCache(),
 })

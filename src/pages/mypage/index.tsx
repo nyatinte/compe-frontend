@@ -1,4 +1,4 @@
-import Mypage from '@/components/page/mypage'
+import Mypage from '@/modules/page/mypage'
 import { NextPage } from 'next'
 import Head from 'next/head'
 

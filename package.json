@@ -8,7 +8,7 @@
     "dev": "run-p dev:*",
     "dev:next": "next dev",
     "dev:codegen": "npm run codegen -- --watch",
-    "dev:pathpida": "pathpida --ignorePath .gitignore --watch",
+    "dev:pathpida": "pathpida --ignorePath .gitignore --watch --output src/lib/$path.ts",
     "build": "next build",
     "start": "next start",
     "lint": "next lint --dir src",
