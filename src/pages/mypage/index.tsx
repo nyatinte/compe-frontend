@@ -1,3 +1,4 @@
+import Layout from '@/modules/components/Layout'
 import Mypage from '@/modules/page/mypage'
 import { NextPage } from 'next'
 import Head from 'next/head'
@@ -8,7 +9,9 @@ const Page: NextPage = () => {
       <Head>
         <title>マイページ</title>
       </Head>
-      <Mypage />
+      <Layout>
+        <Mypage />
+      </Layout>
     </>
   )
 }

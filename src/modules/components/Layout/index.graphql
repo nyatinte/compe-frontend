@@ -1,0 +1,5 @@
+query layout($userId: ID!) {
+  user(id: $userId) {
+    ...header
+  }
+}

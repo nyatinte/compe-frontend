@@ -1,0 +1,5 @@
+fragment header on User {
+  id
+  name
+  image
+}

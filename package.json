@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@apollo/client": "^3.7.7",
+    "@chakra-ui/icons": "^2.0.17",
     "@chakra-ui/react": "^2.4.9",
     "@emotion/react": "^11.10.5",
     "@emotion/styled": "^11.10.5",
@@ -33,6 +34,7 @@
     "eslint-config-next": "13.1.6",
     "framer-motion": "^9.0.1",
     "graphql": "^16.6.0",
+    "graphql-anywhere": "^4.2.8",
     "graphql-scalars": "^1.20.1",
     "next": "13.1.6",
     "next-auth": "^4.19.2",
