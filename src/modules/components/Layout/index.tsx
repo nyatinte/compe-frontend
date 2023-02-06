@@ -1,7 +1,6 @@
 import Loading from '@/components/common/Layout/Loading'
-import { HeaderFragment, HeaderFragmentDoc, useLayoutQuery } from '@/generated/graphql'
+import { HeaderFragment, useLayoutQuery } from '@/generated/graphql'
 import { Container } from '@chakra-ui/react'
-import { filter } from 'graphql-anywhere'
 import { useSession } from 'next-auth/react'
 import { FC } from 'react'
 import Header from './Header'
@@ -11,13 +10,12 @@ type LayoutProps = {
 }
 const Layout: FC<LayoutProps> = ({ children }) => {
   const { data: session } = useSession()
-  const { data, loading, error } = useLayoutQuery({
+  const { data, loading } = useLayoutQuery({
     skip: !session?.user?.id,
     variables: {
       userId: session?.user?.id as string,
     },
   })
-  console.log(data, loading, error)
 
   if (loading) return <Loading />
   return (

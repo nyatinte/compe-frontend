@@ -1,6 +1,7 @@
 import { client } from '@/client/apollo'
 import { CreateNewUserDocument, CreateNewUserMutation, GetUserDocument } from '@/generated/graphql'
 import NextAuth from 'next-auth'
+import { encode } from 'next-auth/jwt'
 import GithubProvider from 'next-auth/providers/github'
 
 export default NextAuth({
@@ -12,16 +13,24 @@ export default NextAuth({
   ],
   callbacks: {
     // 型を上書きする @link src/types/next-auth.d.ts
-    session({ session, token }) {
+    session: async ({ session, token }) => {
       if (session.user) {
-        session.user.id = token.sub
-        session.accessToken = token
+        session.user.id = token['id'] as string
       }
+      session.accessToken = token['accessToken'] as string
+      session.user.token = await encode({
+        token,
+        secret: process.env['NEXTAUTH_SECRET'] as string,
+      })
       return session
     },
-    jwt({ token, user }) {
+    jwt({ token, account, profile, user }) {
       if (user) {
         token.sub = user.id
+      }
+      if (account) {
+        token['accessToken'] = account.access_token
+        token['id'] = profile?.id
       }
       return token
     },

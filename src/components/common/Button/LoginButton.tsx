@@ -4,6 +4,7 @@ import { FC } from 'react'
 
 const LoginButton: FC<ButtonProps> = (props) => {
   const { data: session } = useSession()
+
   if (session) {
     return (
       <>

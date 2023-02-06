@@ -8,11 +8,12 @@ const httpLink = createHttpLink({
 
 const authLink = setContext(async (_, { headers }) => {
   const session = await getSession()
+  const authorization = session?.user.token ? `Bearer ${session.user.token}` : ''
 
   return {
     headers: {
       ...headers,
-      authorization: session?.user.id ? session?.user.id : '',
+      authorization,
     },
   }
 })
