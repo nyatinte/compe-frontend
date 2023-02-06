@@ -1,4 +1,5 @@
 import type { CodegenConfig } from '@graphql-codegen/cli'
+import { z } from 'zod'
 
 const config: CodegenConfig = {
   overwrite: true,
@@ -23,6 +24,12 @@ const config: CodegenConfig = {
       config: {
         strictScalars: true,
         schema: 'zod',
+        scalarSchemas: {
+          Date: z.string().datetime(),
+          DateTime: z.string().datetime(),
+          Email: z.string().email(),
+          URL: z.string().url(),
+        },
       },
     },
     // GraphQLスキーマを生成する
@@ -33,7 +40,10 @@ const config: CodegenConfig = {
   // graphql-scalarsを使う場合はここで指定する
   config: {
     scalars: {
-      DateTime: 'string',
+      DateTime: String,
+      Date: String,
+      EmailAddress: String,
+      URL: String,
     },
   },
 }
