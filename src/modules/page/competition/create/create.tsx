@@ -1,3 +1,4 @@
+import { Button } from '@/components/common/Button/Button'
 import { FileUpload } from '@/components/common/FormField/FileUpload'
 import { Input } from '@/components/common/FormField/Input'
 import { RangeDatepicker } from '@/components/common/FormField/RangeDatePicker'
@@ -8,7 +9,7 @@ import { requiredMessage } from '@/utils/validationMessage'
 import { Container, useToast, VStack } from '@chakra-ui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
 
 const schema = z.object({
@@ -23,8 +24,8 @@ const schema = z.object({
   image: z.union([z.string().url(), z.custom<File>((v) => v instanceof File)]).optional(),
   startDate: z.date({ required_error: requiredMessage('開始日') }),
   endDate: z.date({ required_error: requiredMessage('終了日') }),
-  trainDataset: z.string(),
-  testDataset: z.string(),
+  trainDataset: z.union([z.string().url(), z.custom<File>((v) => v instanceof File)]),
+  testDataset: z.union([z.string().url(), z.custom<File>((v) => v instanceof File)]),
 })
 type FormFields = z.infer<typeof schema>
 
@@ -49,6 +50,10 @@ const CreateCompetitionPage = () => {
       errorToast(toast, '日付の入力に失敗しました')
     }
   }, [selectedDates])
+
+  const onSubmit: SubmitHandler<FormFields> = async (data) => {
+    console.log(data)
+  }
   return (
     <Container>
       <Title>コンペを作る</Title>
@@ -91,6 +96,7 @@ const CreateCompetitionPage = () => {
           error={errors.testDataset?.message}
           {...register('testDataset')}
         />
+        <Button type='submit' isLoading={isSubmitting} onClick={handleSubmit(onSubmit)} />
       </VStack>
     </Container>
   )

@@ -6,7 +6,7 @@ const SideBarFooter = () => {
     <motion.div
       // てくてく歩く
       animate={{
-        x: ['100%', '-2%'],
+        x: ['110%', '-10%'],
       }}
       transition={{
         duration: 10,

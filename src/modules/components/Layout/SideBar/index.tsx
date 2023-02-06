@@ -32,7 +32,7 @@ const SideBar = () => {
             <SideBarBody />
           </DrawerBody>
 
-          <DrawerFooter p={0}>
+          <DrawerFooter p={0} overflow='hidden'>
             <SideBarFooter />
           </DrawerFooter>
         </DrawerContent>
