@@ -1,7 +1,7 @@
 import { Button } from '@/components/common/Button/Button'
 import { FileUpload } from '@/components/common/FormField/FileUpload'
 import { Input } from '@/components/common/FormField/Input'
-import { RangeDatepicker } from '@/components/common/FormField/RangeDatePicker'
+import { RangeDatepicker } from '@/components/common/FormField/RangeDatepicker'
 import { Textarea } from '@/components/common/FormField/Textarea'
 import { Title } from '@/modules/components/Text/Title'
 import errorToast from '@/utils/toast/errorToast'
