@@ -7,6 +7,9 @@
     "plugin:@typescript-eslint/recommended",
     "prettier"
   ],
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  },
   "rules": {
     // importの順番を指定する https://zenn.dev/riemonyamada/articles/02e8c172e1eeb1
     "import/order": [

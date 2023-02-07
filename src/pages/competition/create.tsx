@@ -1,5 +1,5 @@
 import { NextPage } from 'next'
-import CreateCompetitionPage from '@/modules/page/competition/create/create'
+import CreateCompetitionPage from '@/modules/page/competition/create'
 import Head from 'next/head'
 import Layout from '@/modules/components/Layout'
 

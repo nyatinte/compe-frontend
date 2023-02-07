@@ -1,0 +1,5 @@
+mutation createCompetion($input: CreateCompetitionInput!) {
+  createCompetition(createCompetitionInput: $input) {
+    id
+  }
+}

@@ -19,7 +19,7 @@ export const Input = forwardRef<InputProps, 'input'>(
       <>
         <FormControl isInvalid={!!error} isRequired={isRequired} maxW={'container.sm'}>
           {label && <FormLabel color='gray.600'>{label}</FormLabel>}
-          <ChakraInput {...props} ref={ref} />
+          <ChakraInput colorScheme={'blue'} {...props} ref={ref} />
           {error ? (
             <FormHelperText color='red.500'>{error}</FormHelperText>
           ) : (

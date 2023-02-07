@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import Penguin from 'src/public/image/penguin-svgrepo-com.svg'
 
 const SideBarFooter = () => {
   return (
@@ -16,7 +15,7 @@ const SideBarFooter = () => {
       }}
     >
       <motion.img
-        src={Penguin.src}
+        src={'/penguin-svgrepo-com.svg'}
         alt='penguin'
         style={{ width: '10%', height: '10%', objectFit: 'contain' }}
       />

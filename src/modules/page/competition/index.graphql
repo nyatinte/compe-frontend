@@ -1,0 +1,13 @@
+query Competition($userId: ID!, $offset: Int, $limit: Int) {
+  user(id: $userId) {
+    competitions(offset: $offset, limit: $limit) {
+      image
+      title
+      description
+      startDate
+      endDate
+      id
+      isOpen
+    }
+  }
+}

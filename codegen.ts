@@ -1,5 +1,4 @@
 import type { CodegenConfig } from '@graphql-codegen/cli'
-import { z } from 'zod'
 
 const config: CodegenConfig = {
   overwrite: true,
@@ -13,6 +12,9 @@ const config: CodegenConfig = {
         'typescript-react-apollo', // https://the-guild.dev/graphql/codegen/plugins/typescript/typescript-react-apollo
         // 'typed-document-node', // https://the-guild.dev/graphql/codegen/plugins/typed-document-node
       ],
+      config: {
+        useTypeImports: true,
+      },
     },
     //  introspectionを作成する
     // './graphql.schema.json': {
@@ -24,12 +26,14 @@ const config: CodegenConfig = {
       config: {
         strictScalars: true,
         schema: 'zod',
+        enumAsTypes: true,
         scalarSchemas: {
-          Date: z.string().datetime(),
-          DateTime: z.string().datetime(),
-          Email: z.string().email(),
-          URL: z.string().url(),
+          DateTime: 'z.string().datetime()',
+          Date: 'z.string().datetime()',
+          EmailAddress: 'z.string().email()',
+          URL: 'z.string().url()',
         },
+        overwrite: true,
       },
     },
     // GraphQLスキーマを生成する
@@ -40,10 +44,10 @@ const config: CodegenConfig = {
   // graphql-scalarsを使う場合はここで指定する
   config: {
     scalars: {
-      DateTime: String,
-      Date: String,
-      EmailAddress: String,
-      URL: String,
+      DateTime: 'string',
+      Date: 'string',
+      EmailAddress: 'string',
+      URL: 'string',
     },
   },
 }

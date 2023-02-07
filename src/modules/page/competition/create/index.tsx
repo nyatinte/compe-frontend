@@ -1,36 +1,63 @@
 import { Button } from '@/components/common/Button/Button'
-import { FileUpload } from '@/components/common/FormField/FileUpload'
 import { Input } from '@/components/common/FormField/Input'
 import { RangeDatepicker } from '@/components/common/FormField/RangeDatepicker'
 import { Textarea } from '@/components/common/FormField/Textarea'
+import { useCreateCompetionMutation } from '@/generated/graphql'
+import { CreateCompetitionInputSchema } from '@/generated/validate'
 import { Title } from '@/modules/components/Text/Title'
 import errorToast from '@/utils/toast/errorToast'
-import { requiredMessage } from '@/utils/validationMessage'
+import successToast from '@/utils/toast/successToast'
+import { invalidMessage, requiredMessage } from '@/utils/validationMessage'
 import { Container, useToast, VStack } from '@chakra-ui/react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { z } from 'zod'
+import { format } from 'date-fns'
+import { useRouter } from 'next/router'
 
-const schema = z.object({
-  title: z
-    .string({
-      required_error: requiredMessage('名前'),
-    })
-    .max(50, '50文字以内で入力してください'),
-  description: z.string({
-    required_error: requiredMessage('説明'),
-  }),
-  image: z.union([z.string().url(), z.custom<File>((v) => v instanceof File)]).optional(),
-  startDate: z.date({ required_error: requiredMessage('開始日') }),
-  endDate: z.date({ required_error: requiredMessage('終了日') }),
-  trainDataset: z.union([z.string().url(), z.custom<File>((v) => v instanceof File)]),
-  testDataset: z.union([z.string().url(), z.custom<File>((v) => v instanceof File)]),
-})
+// 既存のzodスキーマにルールを追加する
+const schema = CreateCompetitionInputSchema()
+  .extend({
+    title: z.string().min(1, requiredMessage('タイトル')),
+    description: z.string().min(1, requiredMessage('説明')),
+    startDate: z
+      .string({
+        required_error: requiredMessage('開始日'),
+      })
+      .regex(/^\d{4}-\d{2}-\d{2}$/, invalidMessage('開始日')),
+    endDate: z
+      .string({
+        required_error: requiredMessage('終了日'),
+      })
+      .regex(/^\d{4}-\d{2}-\d{2}$/, invalidMessage('終了日')),
+  })
+  .superRefine(({ startDate, endDate }, ctx) => {
+    const start = new Date(startDate)
+    const end = new Date(endDate)
+    if (start >= end) {
+      ctx.addIssue({
+        code: 'invalid_date',
+        message: '開始日は終了日より前に設定してください',
+        path: ['startDate'],
+      })
+    }
+  })
+
 type FormFields = z.infer<typeof schema>
 
 const CreateCompetitionPage = () => {
+  const router = useRouter()
   const toast = useToast()
+  const [createCompetition] = useCreateCompetionMutation({
+    onCompleted: () => {
+      successToast(toast, 'コンペを作成しました')
+    },
+    onError: (e) => {
+      errorToast(toast, 'コンペの作成に失敗しました')
+      console.error(e)
+    },
+  })
   const {
     register,
     setValue,
@@ -44,15 +71,34 @@ const CreateCompetitionPage = () => {
   useEffect(() => {
     try {
       z.array(z.date()).parse(selectedDates)
-      setValue('startDate', selectedDates[0] as Date)
-      setValue('endDate', selectedDates[1] as Date)
+      const formattedDates = selectedDates.map((date) => format(date, 'yyyy-MM-dd')) as [
+        string,
+        string,
+      ]
+      setValue('startDate', formattedDates[0])
+      setValue('endDate', formattedDates[1])
     } catch (e) {
       errorToast(toast, '日付の入力に失敗しました')
     }
   }, [selectedDates])
 
   const onSubmit: SubmitHandler<FormFields> = async (data) => {
-    console.log(data)
+    try {
+      schema.parse(data)
+      console.log(data)
+      await createCompetition({
+        variables: {
+          input: {
+            ...data,
+          },
+        },
+      })
+      reset()
+      await router.push('/competition')
+    } catch (e) {
+      errorToast(toast, '入力内容に誤りがあります')
+      return
+    }
   }
   return (
     <Container>
@@ -80,7 +126,7 @@ const CreateCompetitionPage = () => {
           selectedDates={selectedDates}
           onDateChange={setSelectedDates}
         />
-        <FileUpload
+        {/* <FileUpload
           isRequired
           label='学習用データ'
           accept='.csv'
@@ -95,8 +141,10 @@ const CreateCompetitionPage = () => {
           description='CSVファイルのみアップロードできます'
           error={errors.testDataset?.message}
           {...register('testDataset')}
-        />
-        <Button type='submit' isLoading={isSubmitting} onClick={handleSubmit(onSubmit)} />
+        /> */}
+        <Button type='submit' isLoading={isSubmitting} onClick={handleSubmit(onSubmit)}>
+          作成
+        </Button>
       </VStack>
     </Container>
   )

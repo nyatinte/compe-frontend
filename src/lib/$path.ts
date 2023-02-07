@@ -1,5 +1,8 @@
 export const pagesPath = {
   "competition": {
+    _id: (id: string[]) => ({
+      $url: (url?: { hash?: string }) => ({ pathname: '/competition/[...id]' as const, query: { id }, hash: url?.hash })
+    }),
     "create": {
       $url: (url?: { hash?: string }) => ({ pathname: '/competition/create' as const, hash: url?.hash })
     },
