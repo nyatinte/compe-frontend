@@ -7,16 +7,24 @@ const httpLink = createHttpLink({
 })
 
 const authLink = setContext(async (_, { headers }) => {
-  const session = await getSession()
-  const authorization = session?.user.token ? `Bearer ${session.user.token}` : ''
+  try {
+    const session = await getSession()
+    const authorization = session?.user.token ? `Bearer ${session.user.token}` : ''
 
-  return {
-    headers: {
-      ...headers,
-      authorization,
-    },
+    return {
+      headers: {
+        ...headers,
+        authorization,
+      },
+    }
+  } catch (error) {
+    console.error(error)
+    return {
+      headers,
+    }
   }
 })
+
 export const client = new ApolloClient({
   link: authLink.concat(httpLink),
   cache: new InMemoryCache(),

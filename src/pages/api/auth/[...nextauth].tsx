@@ -35,6 +35,7 @@ export default NextAuth({
       return token
     },
     signIn: async ({ user }) => {
+      // throwしたエラーはURLクエリパラメーターに渡される
       const res = await client.query({
         query: GetUserDocument,
         variables: {
@@ -44,11 +45,12 @@ export default NextAuth({
       if (res.data.user) {
         return true
       }
+
       try {
         await client.mutate<CreateNewUserMutation>({
           mutation: CreateNewUserDocument,
           variables: {
-            id: user.id,
+            id: String(user.id),
             input: {
               name: user.name || user.email,
               email: user.email,
@@ -67,5 +69,6 @@ export default NextAuth({
   session: {
     strategy: 'jwt',
   },
+  // ターミナルにログを出力する
   debug: process.env.NODE_ENV === 'development',
 })
