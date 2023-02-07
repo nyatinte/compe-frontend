@@ -3,5 +3,6 @@ query mypage($userId: ID!) {
     id
     name
     email
+    image
   }
 }
