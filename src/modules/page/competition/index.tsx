@@ -114,8 +114,12 @@ const CompetitionList = () => {
           </HStack>
         </>
       ) : (
-        <Center w={'full'} h={'full'}>
-          <Text>参加中のコンペティションはありません。</Text>
+        <Center w={'full'} h={'50vh'}>
+          <Text fontWeight={'bold'} color='gray' fontSize='2xl' textAlign={'center'}>
+            参加中のコンペティションはありません。
+            <br />
+            招待をもらうか、コンペティションを作成してみましょう！
+          </Text>
         </Center>
       )}
     </Container>
